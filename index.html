@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exclusive Survey: Luxury Fashion Consumer Behavior</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-gold: #D4AF37;
+            --primary-light: #F8E79C;
+            --dark-bg: #0f0f0f;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-main: #333;
+            --danger: #c0392b;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: var(--dark-bg);
+            /* Luxury Dark Gradient Background */
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 20%),
+                linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Hero Section for Landing Page Feel */
+        .hero-section {
+            text-align: center;
+            padding: 60px 20px 40px;
+            color: #fff;
+            max-width: 800px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero-subtitle {
+            font-family: 'Cinzel', serif;
+            color: var(--primary-gold);
+            font-size: 14px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            line-height: 1.4;
+            margin: 0 0 20px;
+            background: linear-gradient(to right, #fff, #D4AF37, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 5s linear infinite;
+        }
+
+        .hero-desc {
+            font-size: 15px;
+            color: #aaa;
+            font-weight: 300;
+            line-height: 1.8;
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-gold);
+            backdrop-filter: blur(5px);
+        }
+
+        /* Main Form Container */
+        .container {
+            background: var(--card-bg);
+            width: 90%;
+            max-width: 750px;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 60px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Progress Bar (Bottom Fixed) */
+        .progress-fixed {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: #222;
+            z-index: 100;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #D4AF37, #FDC830);
+            width: 0%;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Steps */
+        .step { display: none; padding: 40px; animation: slideIn 0.4s ease; }
+        .step.active { display: block; }
+        
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-gold);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        .step-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            color: #111;
+            margin: 0;
+        }
+
+        /* Form Elements */
+        label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #444;
+            font-size: 16px;
+        }
+
+        /* Radio Cards Styling */
+        .radio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        .radio-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        .radio-card:hover {
+            border-color: var(--primary-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .radio-card.selected {
+            background: linear-gradient(135deg, #111, #333);
+            color: var(--primary-gold);
+            border-color: #333;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        .radio-card.selected::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 10px;
+            color: var(--primary-gold);
+        }
+        .radio-card input { display: none; }
+
+        /* Select Styling */
+        select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-family: 'Prompt', sans-serif;
+            font-size: 15px;
+            appearance: none;
+            background: #fff url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23D4AF37%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E") no-repeat right 15px center;
+            background-size: 12px;
+            cursor: pointer;
+        }
+        select:focus { outline: 1px solid var(--primary-gold); border-color: var(--primary-gold); }
+
+        /* Likert Scale Redesign */
+        .likert-container { margin-bottom: 20px; }
+        .likert-header-desk {
+            display: flex;
+            justify-content: flex-end;
+            padding-bottom: 10px;
+            font-size: 12px;
+            color: #888;
+            gap: 12px;
+            padding-right: 10px;
+            border-bottom: 2px solid var(--primary-gold);
+            margin-bottom: 15px;
+        }
+        .likert-header-desk span { width: 35px; text-align: center; }
+
+        .likert-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 8px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+        .likert-row:hover { background: #fffdf5; transform: translateX(5px); }
+        .likert-question { flex: 1; font-size: 14px; padding-right: 20px; line-height: 1.5; color: #333; }
+        .likert-options { display: flex; gap: 8px; }
+        
+        .likert-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            background: #fff;
+            transition: var(--transition);
+            color: #666;
+            font-weight: 500;
+        }
+        .likert-btn:hover { border-color: var(--primary-gold); color: var(--primary-gold); transform: scale(1.1); }
+        .likert-btn.active {
+            background: var(--primary-gold);
+            color: #fff;
+            border-color: var(--primary-gold);
+            box-shadow: 0 3px 8px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .btn {
+            padding: 14px 30px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Prompt', sans-serif;
+            font-size: 15px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-next {
+            background: #111;
+            color: var(--primary-gold);
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background: #000;
+        }
+        .btn-prev { background: #f0f0f0; color: #666; }
+        .btn-prev:hover { background: #e0e0e0; }
+        .btn-reset { background: transparent; color: #aaa; font-size: 13px; text-decoration: underline; }
+        .btn-reset:hover { color: var(--danger); }
+
+        /* Error States */
+        .input-error { border-color: var(--danger) !important; background-color: #fff5f5 !important; animation: shake 0.3s; }
+
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes shine { to { background-position: 200% center; } }
+        @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } 100% { transform: translateX(0); } }
+
+        /* Mobile Responsive */
+        @media (max-width: 600px) {
+            .hero-title { font-size: 24px; }
+            .container { width: 100%; border-radius: 0; box-shadow: none; margin-bottom: 0; min-height: 100vh; }
+            .step { padding: 25px 20px; }
+            .likert-header-desk { display: none; }
+            .likert-row { flex-direction: column; align-items: flex-start; gap: 12px; padding: 20px 15px; border-bottom: 1px solid #eee; }
+            .likert-options { width: 100%; justify-content: space-between; }
+            .likert-btn { width: 40px; height: 40px; font-size: 16px; }
+            .btn-group { flex-direction: column-reverse; gap: 15px; }
+            .btn { width: 100%; justify-content: center; }
+            .btn-reset { margin-top: 10px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-fixed"><div class="progress-bar" id="progressBar"></div></div>
+
+    <header class="hero-section" id="mainHeader">
+        <div class="hero-subtitle">PhD Research Survey</div>
+        <h1 class="hero-title">การวิเคราะห์องค์ประกอบของรูปแบบการดำเนินชีวิต<br>ของผู้บริโภคแฟชั่นตราสินค้าหรู</h1>
+        <div class="hero-desc">
+            <i class="fas fa-quote-left" style="color:var(--primary-gold); margin-right:5px;"></i>
+            แบบสอบถามนี้เป็นส่วนหนึ่งของงานวิจัยระดับปริญญาเอก ข้อมูลของท่านเป็นกุญแจสำคัญในการไขรหัสพฤติกรรมผู้บริโภคยุคใหม่ ข้อมูลทั้งหมดจะถูกเก็บเป็นความลับ
+        </div>
+    </header>
+
+    <div class="container">
+        <form id="surveyForm">
+            <div class="step active" id="step1">
+                <div class="step-header">
+                    <div class="step-icon"><i class="fas fa-user"></i></div>
+                    <h2 class="step-title">ข้อมูลส่วนตัว</h2>
+                </div>
+                
+                <label>เพศ *</label>
+                <div class="radio-grid group-validate" data-name="gender">
+                    <div class="radio-card" onclick="selectRadio(this, 'gender')"><input type="radio" name="gender" value="ชาย"> ชาย</div>
+                    <div class="radio-card" onclick="selectRadio(this, 'gender')"><input type="radio" name="gender" value="หญิง"> หญิง</div>
+                    <div class="radio-card" onclick="selectRadio(this, 'gender')"><input type="radio" name="gender" value="LGBTQ+"> LGBTQ+</div>
+                </div>
+
+                <label>อายุ *</label>
+                <select name="age" class="select-validate">
+                    <option value="" disabled selected>กรุณาเลือกช่วงอายุ</option>
+                    <option value="25-30 ปี">25-30 ปี</option>
+                    <option value="31-35 ปี">31-35 ปี</option>
+                    <option value="36-40 ปี">36-40 ปี</option>
+                    <option value="41-45 ปี">41-45 ปี</option>
+                    <option value="46-50 ปี">46-50 ปี</option>
+                    <option value="51-55 ปี">51-55 ปี</option>
+                    <option value="56-60 ปี">56-60 ปี</option>
+                </select>
+
+                <label>สถานภาพ *</label>
+                <div class="radio-grid group-validate" data-name="status">
+                    <div class="radio-card" onclick="selectRadio(this, 'status')"><input type="radio" name="status" value="โสด"> โสด</div>
+                    <div class="radio-card" onclick="selectRadio(this, 'status')"><input type="radio" name="status" value="สมรส"> สมรส</div>
+                    <div class="radio-card" onclick="selectRadio(this, 'status')"><input type="radio" name="status" value="หม้าย/หย่าร้าง/แยกกันอยู่"> หม้าย/หย่าร้าง/แยกกันอยู่</div>
+                </div>
+
+                <label>ระดับการศึกษา *</label>
+                <select name="education" class="select-validate">
+                    <option value="" disabled selected>กรุณาเลือกระดับการศึกษา</option>
+                    <option value="ต่ำกว่าปริญญาตรี">ต่ำกว่าปริญญาตรี</option>
+                    <option value="ปริญญาตรี">ปริญญาตรี</option>
+                    <option value="ปริญญาโท/ปริญญาเอก">ปริญญาโท/ปริญญาเอก</option>
+                </select>
+
+                <label>รายได้เฉลี่ยต่อเดือน *</label>
+                <select name="income" class="select-validate">
+                    <option value="" disabled selected>กรุณาเลือกช่วงรายได้</option>
+                    <option value="ต่ำกว่าหรือเท่ากับ 10,000 บาท">ต่ำกว่าหรือเท่ากับ 10,000 บาท</option>
+                    <option value="10,001-20,000 บาท">10,001-20,000 บาท</option>
+                    <option value="20,001-30,000 บาท">20,001-30,000 บาท</option>
+                    <option value="30,001-40,000 บาท">30,001-40,000 บาท</option>
+                    <option value="40,001 บาทขึ้นไป">40,001 บาทขึ้นไป</option>
+                </select>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-reset" onclick="resetForm()">ล้างค่า</button>
+                    <button type="button" class="btn btn-next" onclick="nextStep(2)">ถัดไป <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div class="step" id="step2">
+                <div class="step-header">
+                    <div class="step-icon"><i class="fas fa-shopping-bag"></i></div>
+                    <h2 class="step-title">พฤติกรรมการบริโภค</h2>
+                </div>
+                
+                <label>ความถี่ในการใช้ตราสินค้าแฟชั่นหรู *</label>
+                <div class="radio-grid group-validate" data-name="frequency" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+                    <div class="radio-card" onclick="selectRadio(this, 'frequency')"><input type="radio" name="frequency" value="ทุกวัน"> ทุกวัน</div>
+                    <div class="radio-card" onclick="selectRadio(this, 'frequency')"><input type="radio" name="frequency" value="หลายครั้งต่อสัปดาห์"> หลายครั้งต่อสัปดาห์</div>
+                    <div class="radio-card" onclick="selectRadio(this, 'frequency')"><input type="radio" name="frequency" value="หลายครั้งต่อเดือน"> หลายครั้งต่อเดือน</div>
+                    <div class="radio-card" onclick="selectRadio(this, 'frequency')"><input type="radio" name="frequency" value="หลายครั้งต่อปี"> หลายครั้งต่อปี</div>
+                    <div class="radio-card" onclick="selectRadio(this, 'frequency')"><input type="radio" name="frequency" value="ไม่เคยใช้"> ไม่เคยใช้</div>
+                </div>
+
+                <label>ประเภทสินค้าที่ซื้อบ่อยที่สุด *</label>
+                <div class="radio-grid group-validate" data-name="product">
+                    <div class="radio-card" onclick="selectRadio(this, 'product')"><input type="radio" name="product" value="เสื้อผ้า"> เสื้อผ้า</div>
+                    <div class="radio-card" onclick="selectRadio(this, 'product')"><input type="radio" name="product" value="รองเท้า"> รองเท้า</div>
+                    <div class="radio-card" onclick="selectRadio(this, 'product')"><input type="radio" name="product" value="เครื่องประดับ"> เครื่องประดับ</div>
+                    <div class="radio-card" onclick="selectRadio(this, 'product')"><input type="radio" name="product" value="กระเป๋า"> กระเป๋า</div>
+                    <div class="radio-card" onclick="selectRadio(this, 'product')"><input type="radio" name="product" value="ผลิตภัณฑ์ความงาม"> ผลิตภัณฑ์ความงาม</div>
+                </div>
+
+                <label>เหตุผลหลักในการเลือกซื้อ *</label>
+                <div class="radio-grid group-validate" style="grid-template-columns: 1fr;" data-name="reason">
+                    <div class="radio-card" onclick="selectRadio(this, 'reason')"><input type="radio" name="reason" value="เพื่อการแสดงสถานะทางสังคม"> เพื่อการแสดงสถานะทางสังคม</div>
+                    <div class="radio-card" onclick="selectRadio(this, 'reason')"><input type="radio" name="reason" value="เพื่อความสุขส่วนตัว"> เพื่อความสุขส่วนตัว</div>
+                    <div class="radio-card" onclick="selectRadio(this, 'reason')"><input type="radio" name="reason" value="เพื่อการลงทุน"> เพื่อการลงทุน</div>
+                    <div class="radio-card" onclick="selectRadio(this, 'reason')"><input type="radio" name="reason" value="ตามอิทธิพลของเพื่อนหรือครอบครัว"> ตามอิทธิพลของเพื่อนหรือครอบครัว</div>
+                    <div class="radio-card" onclick="selectRadio(this, 'reason')"><input type="radio" name="reason" value="อื่นๆ"> อื่นๆ</div>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-prev" onclick="prevStep(1)">ย้อนกลับ</button>
+                    <button type="button" class="btn btn-next" onclick="nextStep(3)">ถัดไป <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div class="step" id="step3">
+                <div class="step-header">
+                    <div class="step-icon"><i class="fas fa-running"></i></div>
+                    <h2 class="step-title">กิจกรรม (Activities)</h2>
+                </div>
+                <div class="likert-container" id="likert-part1"></div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-prev" onclick="prevStep(2)">ย้อนกลับ</button>
+                    <button type="button" class="btn btn-next" onclick="nextStep(4)">ถัดไป <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div class="step" id="step4">
+                <div class="step-header">
+                    <div class="step-icon"><i class="fas fa-heart"></i></div>
+                    <h2 class="step-title">ความสนใจ (Interests)</h2>
+                </div>
+                <div class="likert-container" id="likert-part2"></div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-prev" onclick="prevStep(3)">ย้อนกลับ</button>
+                    <button type="button" class="btn btn-next" onclick="nextStep(5)">ถัดไป <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div class="step" id="step5">
+                <div class="step-header">
+                    <div class="step-icon"><i class="fas fa-comment-dots"></i></div>
+                    <h2 class="step-title">ความคิดเห็น (Opinions)</h2>
+                </div>
+                <div class="likert-container" id="likert-part3"></div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-prev" onclick="prevStep(4)">ย้อนกลับ</button>
+                    <button type="button" class="btn btn-next" style="background: var(--primary-gold); color: #000;" onclick="submitForm()">ส่งคำตอบ <i class="fas fa-check"></i></button>
+                </div>
+            </div>
+
+            <div class="step" id="successPage" style="text-align: center; padding: 60px 30px;">
+                <div style="font-size: 80px; color: var(--primary-gold); margin-bottom: 30px;">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2 style="font-family: 'Playfair Display', serif; color: #333; font-size: 28px;">บันทึกข้อมูลสำเร็จ</h2>
+                <p style="color: #666; margin-bottom: 30px;">ขอบคุณสำหรับความร่วมมือในการตอบแบบสอบถาม</p>
+                <button type="button" class="btn" style="background: #111; color: #fff; margin: 0 auto;" onclick="location.reload()">กลับสู่หน้าหลัก</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // ============================================================
+        //  URL Scripts (ไม่เปลี่ยนแปลง Logic)
+        // ============================================================
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyMAy3cPZNDniC8nGF9mGLZNiNo4ho5Smoi6w2ILg9Z2dSsLmh0WsD473sSaDbWvwG9/exec'; 
+        // ============================================================
+
+        function renderLikert(containerId, questions, startIdx) {
+            const container = document.getElementById(containerId);
+            // Header for Desktop
+            let html = `<div class="likert-header-desk"><span>5</span><span>4</span><span>3</span><span>2</span><span>1</span></div>`;
+            
+            questions.forEach((q, i) => {
+                html += `<div class="likert-row">
+                            <div class="likert-question">${startIdx + i}. ${q}</div>
+                            <div class="likert-options">`;
+                // 5 to 1
+                [5,4,3,2,1].forEach(n => {
+                    html += `<div class="likert-btn" onclick="selectLikert(this)">${n}</div>`;
+                });
+                html += `</div></div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // Data Arrays (คงเดิม)
+        const q1 = [
+            "ท่านมักเข้าร่วมกิจกรรมทางสังคมที่เกี่ยวข้องกับแฟชั่นหรือสไตล์",
+            "ท่านชอบใช้เวลาในการค้นหาสินค้าเพื่อสำรวจตราสินค้าแฟชั่นหรูใหม่ ๆ",
+            "ท่านมักใช้เวลาบนโซเชียลมีเดียเพื่อติดตามเทรนด์ตราสินค้าแฟชั่นหรู",
+            "ท่านเคยเข้าร่วมกิจกรรมหรืออีเวนต์ที่สร้างประสบการณ์ร่วมกับตราสินค้าแฟชั่นหรู",
+            "ท่านติดตามเพจหรือบัญชีทางการของตราสินค้าแฟชั่นหรูบนโซเชียลมีเดีย",
+            "ท่านเคยมีส่วนร่วม (เช่น กดไลก์ แสดงความคิดเห็น หรือแชร์) โพสต์ของตราสินค้าแฟชั่นหรู",
+            "ท่านมักติดตามอินฟลูเอนเซอร์ที่รีวิวหรือแนะนำตราสินค้าแฟชั่นหรู",
+            "ท่านเคยซื้อสินค้าจากตราสินค้าแฟชั่นหรูตามคำแนะนำของอินฟลูเอนเซอร์",
+            "ท่านมักค้นหาข้อมูลเกี่ยวกับตราสินค้าแฟชั่นหรูก่อนตัดสินใจซื้อ",
+            "ท่านเปรียบเทียบคุณภาพและภาพลักษณ์ของตราสินค้าแฟชั่นหรูหลายแบรนด์ก่อนตัดสินใจ",
+            "ท่านมักเก็บข้อมูลเกี่ยวกับตราสินค้าแฟชั่นหรูเพื่อใช้เปรียบเทียบในการเลือกซื้อ",
+            "ท่านเคยซื้อสินค้าจากตราสินค้าแฟชั่นหรูที่มีการสื่อสารโดดเด่นและน่าสนใจ",
+            "หลังจากซื้อสินค้า ท่านมักแชร์ประสบการณ์การใช้ตราสินค้าแฟชั่นหรูกับเพื่อนหรือบนโซเชียลมีเดีย",
+            "ท่านมักกลับไปซื้อสินค้าของตราสินค้าแฟชั่นหรูเดิม หากรู้สึกประทับใจในการสื่อสารของแบรนด์",
+            "ท่านติดตามข่าวสารเกี่ยวกับโครงการเพื่อสังคมหรือสิ่งแวดล้อมของตราสินค้าแฟชั่นหรู",
+            "ท่านเคยเลือกซื้อตราสินค้าแฟชั่นหรูที่ให้ความสำคัญกับความยั่งยืนและจริยธรรมทางสังคม",
+            "ท่านชอบแบ่งปันประสบการณ์การใช้ตราสินค้าแฟชั่นหรูกับผู้อื่น"
+        ];
+        
+        const q2 = [
+            "ท่านสนใจในประวัติและแนวคิดเบื้องหลังตราสินค้าแฟชั่นหรู",
+            "ท่านให้ความสนใจกับการออกแบบที่สะท้อนเอกลักษณ์เฉพาะของตราสินค้าแฟชั่นหรู",
+            "ท่านสนใจศึกษาเกี่ยวกับภาพลักษณ์และตัวตนของตราสินค้าแฟชั่นหรู",
+            "ท่านให้ความสำคัญกับเรื่องราวและแนวทางการสื่อสารของตราสินค้าแฟชั่นหรูมากกว่าราคา",
+            "ท่านให้ความสำคัญกับวิธีที่ตราสินค้าแฟชั่นหรูใช้สื่อสารภาพลักษณ์ในแต่ละช่องทาง",
+            "ท่านสนใจคอนเทนต์ของตราสินค้าแฟชั่นหรูบนโซเชียลมีเดียมากกว่าสื่ออื่น",
+            "ท่านชอบดูวิดีโอหรือภาพเบื้องหลังการออกแบบและแฟชั่นโชว์ของตราสินค้าแฟชั่นหรู",
+            "ท่านสนใจติดตามแคมเปญการตลาดหรือโปรโมชั่นของตราสินค้าแฟชั่นหรู",
+            "ท่านให้ความสนใจกับอินฟลูเอนเซอร์ที่แนะนำสินค้าของตราสินค้าแฟชั่นหรู",
+            "ท่านสนใจเนื้อหาที่อินฟลูเอนเซอร์นำเสนอเกี่ยวกับตราสินค้าแฟชั่นหรูมากกว่าการโฆษณาโดยตรง",
+            "ท่านสนใจอ่านรีวิวหรือความคิดเห็นของผู้บริโภคคนอื่นเกี่ยวกับตราสินค้าแฟชั่นหรู",
+            "ท่านรู้สึกตื่นเต้นเมื่อมีคอลเลกชันใหม่จากตราสินค้าแฟชั่นหรูออกมา",
+            "ท่านชื่นชอบตราสินค้าแฟชั่นหรูที่สามารถถ่ายทอดอารมณ์หรือเรื่องราวผ่านโฆษณาได้ดี",
+            "ท่านให้ความสนใจกับตราสินค้าแฟชั่นหรูที่ทำให้รู้สึกเข้ากับอารมณ์ของท่าน",
+            "ท่านให้ความสำคัญกับตราสินค้าแฟชั่นหรูที่สื่อสารตรงกับความต้องการและบุคลิกของตนเอง",
+            "ท่านสนใจตราสินค้าแฟชั่นหรูที่สามารถสื่อสารเรื่องราวให้สอดคล้องกับค่านิยมส่วนตัวของท่าน",
+            "ท่านสนใจตราสินค้าแฟชั่นหรูที่นำเสนอแนวคิดการผลิตที่เป็นมิตรต่อสิ่งแวดล้อม",
+            "ท่านให้ความสนใจกับเนื้อหาที่เกี่ยวกับตราสินค้าแฟชั่นหรูที่สื่อถึงการมีส่วนร่วมกับชุมชนหรือการคืนกำไรให้สังคม",
+            "ท่านสนใจติดตามข่าวสารเกี่ยวกับโครงการเพื่อสังคมหรือสิ่งแวดล้อมของตราสินค้าแฟชั่นหรู",
+            "ท่านให้ความสำคัญกับการดูแลลูกค้าและบริการหลังการขายของตราสินค้าแฟชั่นหรู",
+            "ท่านสนใจติดตามกิจกรรมหรือข่าวสารของตราสินค้าแฟชั่นหรูแม้หลังจากซื้อไปแล้ว"
+        ];
+
+        const q3 = [
+            "ท่านเชื่อว่าการใช้ตราสินค้าแฟชั่นหรูช่วยเพิ่มคุณค่าให้กับตนเอง",
+            "ท่านมองว่าตราสินค้าแฟชั่นหรูมีอิทธิพลต่อการสื่อสารสถานะทางสังคม",
+            "ท่านคิดว่าตราสินค้าแฟชั่นหรูสะท้อนรสนิยมและไลฟ์สไตล์ของผู้ใช้",
+            "ท่านเชื่อว่าการลงทุนในตราสินค้าแฟชั่นหรูเป็นสิ่งที่คุ้มค่า",
+            "ท่านมองว่าตราสินค้าแฟชั่นหรูควรสื่อสารภาพลักษณ์และอัตลักษณ์ที่ชัดเจน",
+            "ท่านรู้สึกว่าการใช้ตราสินค้าแฟชั่นหรูคือการลงทุนในตัวเอง",
+            "ท่านรู้สึกว่าประสบการณ์จากการใช้ตราสินค้าแฟชั่นหรูช่วยสร้างความทรงจำที่มีคุณค่า",
+            "การสื่อสารเชิงอารมณ์ของตราสินค้าแฟชั่นหรูช่วยให้ท่านรู้สึกมีส่วนร่วมและภักดีต่อแบรนด์มากขึ้น",
+            "ท่านรู้สึกมั่นใจในการตัดสินใจซื้อตราสินค้าแฟชั่นหรูที่มีการสื่อสารอย่างชัดเจนและจริงใจ",
+            "ท่านพึงพอใจกับตราสินค้าแฟชั่นหรูที่ให้ความสำคัญกับความสัมพันธ์ระหว่างแบรนด์กับลูกค้าอย่างต่อเนื่อง",
+            "ท่านรู้สึกว่าตราสินค้าแฟชั่นหรูมีการสื่อสารที่สอดคล้องกันในทุกช่องทาง",
+            "ท่านรู้สึกว่าตราสินค้าแฟชั่นหรูที่ใช้กราฟฟิคสร้างสรรค์มีภาพลักษณ์ทันสมัยมากขึ้น",
+            "การสื่อสารของตราสินค้าแฟชั่นหรูผ่านช่องทางออนไลน์ช่วยให้ท่านได้รับข้อมูลที่ครบถ้วนและน่าเชื่อถือ",
+            "การใช้ผู้ทรงอิทธิพลช่วยให้ตราสินค้าแฟชั่นหรูดูเข้าถึงง่ายและมีความเป็นจริงมากขึ้น",
+            "ท่านเชื่อว่าภาพลักษณ์ที่ตราสินค้าแฟชั่นหรูสื่อสารออกมามีผลต่อการเลือกซื้อของท่าน",
+            "ท่านเชื่อว่าการเข้าถึงข้อมูลจากหลายแหล่งช่วยให้ตัดสินใจได้แม่นยำขึ้น",
+            "การสื่อสารของตราสินค้าแฟชั่นหรูส่งผลโดยตรงต่อความตั้งใจซื้อสินค้าของท่าน",
+            "การสื่อสารเรื่องความยั่งยืนช่วยให้ฉันรู้สึกไว้วางใจและเคารพในตราสินค้าแฟชั่นหรูมากขึ้น",
+            "ฉันมองว่าตราสินค้าแฟชั่นหรูที่ให้ความสำคัญกับคุณค่าทางสังคมมีภาพลักษณ์เชิงบวกมากกว่าตราสินค้าอื่น",
+            "การสื่อสารที่ดีช่วยให้ตราสินค้าแฟชั่นหรูเหนือกว่าแบรนด์คู่แข่ง",
+            "ท่านรู้สึกว่าตราสินค้าแฟชั่นหรูที่สื่อสารได้ดีจะทำให้ผู้บริโภครับรู้ถึงคุณค่าและเอกลักษณ์ของแบรนด์มากขึ้น",
+            "ท่านรู้สึกว่าการสื่อสารต่อเนื่องของตราสินค้าแฟชั่นหรูช่วยสร้างความภักดีและความไว้วางใจในระยะยาว"
+        ];
+        
+        renderLikert('likert-part1', q1, 1);
+        renderLikert('likert-part2', q2, 1);
+        renderLikert('likert-part3', q3, 1);
+
+        let currentStep = 1;
+        const totalSteps = 5;
+
+        function updateProgress() {
+            const percent = ((currentStep) / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = percent + '%';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function validateStep(stepId) {
+            let isValid = true;
+            const step = document.getElementById(stepId);
+            
+            // Validate Selects
+            step.querySelectorAll('.select-validate').forEach(select => {
+                if (select.value === "") { 
+                    isValid = false; 
+                    select.classList.add('input-error');
+                    // Remove error after change
+                    select.addEventListener('change', function() { this.classList.remove('input-error') });
+                } else { 
+                    select.classList.remove('input-error'); 
+                }
+            });
+
+            // Validate Radio Groups
+            step.querySelectorAll('.group-validate').forEach(group => {
+                const name = group.getAttribute('data-name');
+                if (!step.querySelector(`input[name="${name}"]:checked`)) {
+                    isValid = false;
+                    group.querySelectorAll('.radio-card').forEach(c => c.classList.add('input-error'));
+                }
+            });
+
+            // Validate Likert
+            step.querySelectorAll('.likert-row').forEach(row => {
+                if (!row.querySelector('.likert-btn.active')) {
+                    isValid = false;
+                    row.style.border = "1px solid var(--danger)";
+                } else {
+                    row.style.border = "none";
+                }
+            });
+
+            if (!isValid) {
+                // Shake effect logic handled by CSS animation class re-trigger could be added here
+                alert("กรุณากรอกข้อมูลให้ครบถ้วนในช่องที่มีเครื่องหมาย * หรือไฮไลท์สีแดง");
+            }
+            return isValid;
+        }
+
+        function nextStep(targetStep) {
+            if (targetStep > currentStep && !validateStep('step' + currentStep)) return;
+            
+            // Fade out current
+            const currentEl = document.querySelector('.step.active');
+            currentEl.style.opacity = '0';
+            
+            setTimeout(() => {
+                currentEl.classList.remove('active');
+                currentEl.style.opacity = '1';
+                
+                const nextEl = document.getElementById('step' + targetStep);
+                nextEl.classList.add('active');
+                
+                currentStep = targetStep;
+                updateProgress();
+            }, 300);
+        }
+
+        function prevStep(step) {
+            document.querySelector('.step.active').classList.remove('active');
+            document.getElementById('step' + step).classList.add('active');
+            currentStep = step;
+            updateProgress();
+        }
+
+        function selectRadio(card, groupName) {
+            // Remove selection from siblings
+            const parent = card.parentElement;
+            parent.querySelectorAll('.radio-card').forEach(c => {
+                c.classList.remove('selected');
+                c.classList.remove('input-error');
+            });
+            
+            card.classList.add('selected');
+            card.querySelector('input').checked = true;
+        }
+
+        function selectLikert(btn) {
+            const row = btn.parentElement.parentElement;
+            Array.from(row.getElementsByClassName('likert-btn')).forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            row.style.border = "none";
+        }
+
+        function resetForm() {
+            if(confirm("คุณต้องการล้างข้อมูลทั้งหมดและเริ่มใหม่หรือไม่?")) location.reload();
+        }
+
+        function submitForm() {
+            if (!validateStep('step5')) return;
+
+            const btn = document.querySelector('.btn-next[onclick="submitForm()"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> กำลังบันทึก...';
+            btn.disabled = true;
+
+            let data = [];
+            const getVal = (s) => { const el = document.querySelector(s); return el ? el.value : ""; };
+            
+            data.push(getVal('input[name="gender"]:checked'));
+            data.push(getVal('select[name="age"]'));
+            data.push(getVal('input[name="status"]:checked'));
+            data.push(getVal('select[name="education"]'));
+            data.push(getVal('select[name="income"]'));
+            data.push(getVal('input[name="frequency"]:checked'));
+            data.push(getVal('input[name="product"]:checked'));
+            data.push(getVal('input[name="reason"]:checked'));
+
+            document.querySelectorAll('.likert-row').forEach(row => {
+                const active = row.querySelector('.likert-btn.active');
+                data.push(active ? active.innerText : "");
+            });
+
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ answers: data })
+            })
+            .then(() => {
+                // Success UI transition
+                document.getElementById('mainHeader').style.display = 'none';
+                document.querySelector('.step.active').classList.remove('active');
+                document.getElementById('successPage').classList.add('active');
+                document.getElementById('progressBar').style.width = '100%';
+                window.scrollTo(0,0);
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert('เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาลองใหม่อีกครั้ง');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+        }
+
+        updateProgress();
+    </script>
+</body>
+</html>
